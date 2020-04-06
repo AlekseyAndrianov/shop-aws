@@ -10,7 +10,7 @@ import java.util.UUID;
 @Table(name = "product")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID product_id;
     private String name;
     private String article;

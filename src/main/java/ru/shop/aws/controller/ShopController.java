@@ -16,14 +16,17 @@ public class ShopController {
 
     @GetMapping("/{product_id}")
     public Product getProduct(@PathVariable UUID product_id) {
-        // отправляем запрос к другому бекенду, получаем ответ
-//        return new Product();
         return productRepository.findById(product_id).get();
     }
-    @PostMapping("/put/{product_id}")
-    public Product putProduct(@PathVariable UUID product_id) {
-        // отправляем запрос к другому бекенду, получаем ответ
-//        return new Product();
-        return productRepository.findById(product_id).get();
+    @PostMapping("/new")
+    public Product putProduct() {
+        Product product = new Product();
+        product.setName(String.format("New product %d" + (productRepository.count() + 1)));
+        product.setArticle(String.format("New article %d" + (productRepository.count() + 1)));
+        product.setColor("blue");
+        product.setPrice(1000.0);
+        product.setSize("M");
+        productRepository.save(product.getName(), product.getArticle(), product.getSize(), product.getColor(), product.getPrice());
+        return product;
     }
 }

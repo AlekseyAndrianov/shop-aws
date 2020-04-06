@@ -12,10 +12,14 @@ import java.util.UUID;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, UUID> {
 
-    @Override
     @Query("SELECT p FROM Product p where p.product_id = :product_id")
     Optional<Product> findById(@Param("product_id") UUID product_id);
 
-    @Override
-    void deleteById(@Param("product_id") UUID product_id);
+    @Query(value = "INSERT INTO Product (name, article, size, color, price) values (:name, :article, :size, :color, :price)", nativeQuery = true)
+    <S extends Product> S save(
+            @Param("name") String name,
+            @Param("article") String article,
+            @Param("size") String size,
+            @Param("color") String color,
+            @Param("price") Double price);
 }
